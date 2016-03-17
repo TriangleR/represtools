@@ -1,0 +1,92 @@
+---
+title: "represtools"
+author: "Brian A. Fannin"
+date: "`r Sys.Date()`"
+output: 
+  slidy_presentation:
+    css: My.css
+---
+
+# Overview
+
+> The focus is less on the equations and more on the equator.
+
+# Inspiration
+
+* Reproducible Research by Christropher Gandrud
+* `devtools` by Hadley Wickham.
+
+# Guiding principals
+
+- Units of work should be modular. Build analytic steps like building functions.
+- All work takes place in .Rmd files.
+- The only form of data exchange between steps is .rda.
+- Recreate when necessary and only when necessary
+
+# Other stuff
+
+* Common external data sources like SQL and URL should be easy to deal with.
+* Version control easily built in
+
+# 4 principal stages: 
+
+The four steps are verbs. Their outputs are adjectives which describe the data contained. Each step may work in isolation, so long as precedent data exists.
+
+> - gather
+> * cook
+> * analyze 
+> * present
+
+# A sample workflow
+
+```{r eval=FALSE}
+represtools::NewResearch("Baseball")
+represtools::Gather("Hitters")
+# write some code
+represtools::Cook("Hitters")
+# write some code
+represtools::Analyze("Handedness")
+# write some code
+represtools::Present("Handedness", title = "On the quality of right-handed batters")
+# write some code
+represtools::Make()
+represtools::AddGitRemote(Name = "origin", URL = "https://github.com/PirateGrunt/raw.git")
+```
+
+And that would do it.
+
+# NewResearch
+
+* Create a new set of directories
+* Copy the Makefile
+* git init
+
+# Verbs
+
+* Copy the markdown skeleton to the appropriate directory.
+* Control what files are used for input. Only one output file.
+* Default behavior is to 
+
+```{r eval = FALSE}
+represtools::Gather("Pitchers")
+represtools::Cook("Players", inputFiles = c("Hitters", "Pitchers"))
+```
+
+# Make
+
+Simply put, Make does the following:
+
+* Make only runs those elements of your project which are needed. 
+* It's possible to construct various "recipes" which different
+* `Make` comes with RStudio
+
+```{r eval=FALSE}
+represtools::Make()
+represtools::Make("clean")
+```
+
+# Questions
+
+* Why not .rds? Short answer: only saves a single object
+* What's wrong with ProjectTemplate? Short answer: nothing
+* Why not rake or waf? Short answer: I'm not familiar with these tools.
